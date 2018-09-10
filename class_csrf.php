@@ -19,7 +19,7 @@ class Token
 	*/
 	private static function token()
 	{
-		return md5(uniqid(rand(), true));
+		return bin2hex(openssl_random_pseudo_bytes(64));
 	}
 	
 	/**
@@ -63,7 +63,7 @@ class Token
 		{
 			$user_token = $_POST['token'];
 			$stored_token = $_SESSION['token'];
-			return $user_token === $stored_token;
+			return hash_equals($_SESSION['token'], $_POST['token']);
 		}
 		else
 		{
